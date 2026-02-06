@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salesforce Glass Dashboard</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="h-screen flex flex-col p-6 overflow-hidden relative">
+    
+    <div class="bg-shape1"></div>
+    <div class="bg-shape2"></div>
+
+    <div class="flex justify-between items-center mb-8 z-10">
+        <div class="flex items-center gap-3 px-4 py-2 glass-panel">
+            <span class="text-2xl">💎</span>
+            <div>
+                <h1 class="text-lg font-bold text-slate-800 tracking-wide">BATCH MONITOR</h1>
+                <p class="text-xs text-slate-500 uppercase">Production</p>
+            </div>
+        </div>
+        <div class="text-right glass-panel px-4 py-2">
+            <p class="text-xs text-slate-500 font-bold uppercase">Local Time</p>
+            <p class="text-xl font-mono font-bold text-slate-800" id="clock">--:--:--</p>
+        </div>
+    </div>
+
+    <div class="flex-1 flex flex-col justify-center items-center mb-8 z-10">
+        <p class="text-slate-600 text-sm uppercase font-bold tracking-[0.2em] mb-2 glass-panel px-3 py-1">Estimated Time Remaining</p>
+        <div class="text-7xl md:text-9xl font-mono font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 tabular-nums drop-shadow-sm" id="countdown">
+            00:00:00
+        </div>
+        <p class="text-slate-600 mt-4 text-lg font-medium">Target Arrival: <span id="etaText" class="text-slate-800 font-bold">--:-- PM</span></p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8 max-w-6xl mx-auto w-full z-10">
+        
+        <div class="glass-panel p-6 col-span-2 flex flex-col justify-between">
+            <div class="flex gap-4 mb-4">
+                <div class="w-1/3">
+                    <label class="block text-xs text-slate-600 uppercase font-bold mb-1 pl-1">Start Time</label>
+                    <input type="time" id="startTime" class="w-full glass-input rounded-lg p-3 text-slate-800 font-bold font-mono" value="11:45">
+                </div>
+                <div class="w-1/3">
+                    <label class="block text-xs text-slate-600 uppercase font-bold mb-1 pl-1">Total</label>
+                    <input type="number" id="totalBatches" class="w-full glass-input rounded-lg p-3 text-slate-800 font-bold font-mono" value="9862">
+                </div>
+                <div class="w-1/3">
+                    <label class="block text-xs text-slate-600 uppercase font-bold mb-1 pl-1">Processed</label>
+                    <input type="number" id="currentProcessed" class="w-full glass-input rounded-lg p-3 text-slate-800 font-bold font-mono placeholder-slate-400" placeholder="e.g. 4673">
+                </div>
+            </div>
+            <button onclick="updateData()" class="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-blue-500/30">
+                Update Telemetry
+            </button>
+        </div>
+
+        <div class="glass-panel p-6 flex flex-col justify-center relative overflow-hidden">
+            <div class="absolute top-0 right-0 p-4 opacity-10">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-20 w-20 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                </svg>
+            </div>
+            <p class="text-slate-500 text-xs uppercase font-bold">Velocity</p>
+            <div class="flex items-baseline gap-2 mt-1">
+                <h2 class="text-5xl font-extrabold text-slate-800" id="speedDisp">0</h2>
+                <span class="text-sm text-slate-500 font-medium">batch/min</span>
+            </div>
+            <div class="mt-2 text-sm font-medium" id="speedDelta">
+                <span class="text-slate-400">-- No Data</span>
+            </div>
+        </div>
+
+        <div class="glass-panel p-6 flex flex-col justify-center">
+            <div class="flex justify-between items-end mb-2">
+                <p class="text-slate-500 text-xs uppercase font-bold">Completion</p>
+                <span class="text-blue-600 font-extrabold text-xl" id="percentDisp">0%</span>
+            </div>
+            <div class="w-full bg-white/50 rounded-full h-4 p-1 backdrop-blur-md border border-white/40">
+                <div id="progressBar" class="bg-gradient-to-r from-blue-500 to-purple-500 h-full rounded-full transition-all duration-1000 shadow-sm" style="width: 0%"></div>
+            </div>
+            <p class="text-xs text-slate-500 mt-3 text-right font-medium">
+                <span id="remainingDisp" class="text-slate-800 font-bold font-mono">0</span> remaining
+            </p>
+        </div>
+    </div>
+
+    <div class="flex-1 min-h-0 w-full max-w-6xl mx-auto glass-panel p-5 z-10">
+        <canvas id="burnDownChart"></canvas>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

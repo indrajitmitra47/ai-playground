@@ -1,0 +1,53 @@
+/* 1. The Vibrant Background */
+body { 
+    font-family: 'Inter', system-ui, sans-serif; 
+    color: #1e293b; 
+    /* Colorful mesh gradient */
+    background-color: #ffdee9;
+    background-image: linear-gradient(0deg, #ffdee9 0%, #b5fffc 100%);
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* Abstract shapes for background depth */
+.bg-shape1 { 
+    position: absolute; 
+    top: -10%; left: -10%; 
+    width: 40%; height: 40%; 
+    background: rgba(196, 181, 253, 0.6); 
+    filter: blur(100px); 
+    border-radius: 50%; 
+    z-index: -1; 
+}
+
+.bg-shape2 { 
+    position: absolute; 
+    bottom: -10%; right: -10%; 
+    width: 40%; height: 40%; 
+    background: rgba(167, 243, 208, 0.6); 
+    filter: blur(100px); 
+    border-radius: 50%; 
+    z-index: -1; 
+}
+
+/* 2. The Frosted Glass Panels */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.3); 
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1); 
+    backdrop-filter: blur(16px); 
+    -webkit-backdrop-filter: blur(16px); 
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.6); 
+}
+
+/* 3. Glassy Input Fields */
+.glass-input {
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(5px);
+}
+.glass-input:focus {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: #3b82f6;
+    outline: none;
+}
